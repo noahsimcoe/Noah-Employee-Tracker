@@ -1,6 +1,6 @@
 // required imports
 const inquirer = require("inquirer");
-const connection = require("./config/connection");
+const db = require("./config/connection");
 
 // first starter prompt of the application
 const questions = () => { inquirer.prompt([
@@ -22,7 +22,7 @@ const questions = () => { inquirer.prompt([
             "View All Departments",
             "Add Department",
             "Remove Department",
-            "View Total Utilized Budget By Department"
+            "View Total Utilized Budget By Department",
         ],
     },
 ]).then((answers) => {
@@ -70,14 +70,17 @@ const questions = () => { inquirer.prompt([
         //     viewTotlaUtilizedBudgetByDepartment();
         //     break;
         default:
-            console.log("Please choose a correct action.")
+            console.log("Please choose a correct action.");
         }
     });
 };
 
 const viewAllEmployees = async () => {
-        const sql = `SELECT first_name, last_name FROM employee ORDER BY first_name ASC`;
-        connection.query(sql);
+        // const sql = `SELECT first_name, last_name FROM employee ORDER BY first_name ASC`;
+        // console.log(db.query(sql));
+        db.query('SELECT first_name, last_name FROM employee ORDER BY first_name ASC', function (err, results) {
+            console.table(results);
+          });
 };
 
 // viewAllEmployeesByDepartment()
