@@ -17,12 +17,12 @@ VALUES ("Software Engineer Asc", 1, 75000),
        ("Economist Lead", 4, 125000.00);
 
 INSERT INTO employee(first_name, last_name, role_id, manager_id)
-VALUES ("Eli", "Stenstrom", 9, null),
+VALUES ("Eli", "Stenstrom", 10, null),
        ("Chase", "Hickman", 2, 1),
-       ("Zackum", "Hohenstein", 3, 1),
+       ("Zackum", "Hohenstein", 4, 1),
        ("Toby", "Young", 5, 1),
-       ("Joel", "Brutlag", 1, 1),
-       ("Cody", "White", 4, 1),
-       ("Adam", "Hollmann", 7, 1),
-       ("Adam", "Mount", 8, 1),
-       ("Jakeum", "Thompson", 10, 1);
+       ("Joel", "Brutlag", 1, 6),
+       ("Cody", "White", 3, null),
+       ("Adam", "Hollmann", 7, 6),
+       ("Adam", "Mount", 8, 6),
+       ("Jakeum", "Thompson", 9, 1);
