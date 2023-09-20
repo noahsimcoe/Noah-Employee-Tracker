@@ -78,7 +78,7 @@ const questions = () => { inquirer.prompt([
 const viewAllEmployees = async () => {
         // const sql = `SELECT first_name, last_name FROM employee ORDER BY first_name ASC`;
         // console.log(db.query(sql));
-        db.query('SELECT first_name, last_name FROM employee ORDER BY first_name ASC', function (err, results) {
+        db.query('SELECT CONCAT (first_name, " ", last_name) AS employee FROM employee ORDER BY first_name ASC', function (err, results) {
             console.table(results);
           });
 };
