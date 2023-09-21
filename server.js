@@ -11,11 +11,9 @@ const questions = () => { inquirer.prompt([
         choices: [
             "View All Employees",
             "View All Employees by Department",
-            "View All Employees By Manager",
             "Add Employee",
             "Remove Employee",
             "Update Employee Role",
-            "Update Employee Manager",
             "View All Roles",
             "Add Role",
             "Remove Role",
@@ -30,24 +28,18 @@ const questions = () => { inquirer.prompt([
         case "View All Employees":
             viewAllEmployees();
             break;
-        // case "View All Employees by Department":
-        //     viewAllEmployeesByDepartment();
-        //     break;
-        // case "View All Employees By Manager":
-        //     viewAllEmployeesByManager();
-        //     break;
+        case "View All Employees by Department":
+            viewAllEmployeesByDepartment();
+            break;
         case "Add Employee":
             addEmployee();
             break;
         case "Remove Employee":
             removeEmployee();
             break;
-        // case "Update Employee Role":
-        //     updateEmployeeRole();
-        //     break;
-        // case "Update Employee Manager":
-        //     updateEmployeeManager();
-        //     break;
+        case "Update Employee Role":
+            updateEmployeeRole();
+            break;
         case "View All Roles":
             viewAllRoles();
             break;
@@ -76,7 +68,7 @@ const questions = () => { inquirer.prompt([
 };
 
 const viewAllEmployees = async () => {
-        db.query('SELECT id, CONCAT (first_name, " ", last_name) AS employee FROM employee ORDER BY id ASC', function (err, results) {
+        db.query('SELECT employee.id, CONCAT (employee.first_name, " ", employee.last_name) AS employee, role.title FROM employee INNER JOIN role ON employee.role_id = role.id ORDER BY id ASC', function (err, results) {
             console.table(results);
             questions();
           });
@@ -139,11 +131,39 @@ const removeRole = () => {
     });
 })};
 
-// updateEmployeeRole()
-// updateEmployeeManager()
-// viewAllEmployeesByDepartment()
-// viewAllEmployeesByManager()
+const updateEmployeeRole = () => {
+    inquirer.prompt([
+        {
+            name: "employee_id",
+            type: "input",
+            message: "What is the employee's ID?",
+        },
+        {
+            name: "role_id",
+            type: "input",
+            message: "What is the ID of the new role?",
+        },
+    ]).then((answer) => {
+        let newData = [answer.role_id, answer.employee_id]
+        db.query('UPDATE employee SET role_id = ? WHERE id = ?', newData, (err, results) => {
+            viewAllEmployees();
+        });
+})};
 
+const viewAllEmployeesByDepartment = () => {
+    inquirer.prompt([
+        {
+            name: "department_id",
+            type: "input",
+            message: "What is the ID of the department?",
+        },
+]).then((answer) => {
+    let newData = [answer.department_id]
+    db.query('SELECT CONCAT (employee.first_name, " ", employee.last_name) AS employee_name FROM employee INNER JOIN role ON employee.role_id = role.id WHERE role.department_id = ?', newData, (err, results) => {
+        console.table(results);
+        questions();
+    });
+})};
 
 const viewTotalBudgetByDepartment = () => {
     inquirer.prompt([
