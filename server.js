@@ -68,7 +68,7 @@ const questions = () => { inquirer.prompt([
 };
 
 const viewAllEmployees = async () => {
-        db.query('SELECT employee.id, CONCAT (employee.first_name, " ", employee.last_name) AS employee, role.title FROM employee INNER JOIN role ON employee.role_id = role.id ORDER BY id ASC', function (err, results) {
+        db.query('SELECT employee.id, CONCAT (employee.first_name, " ", employee.last_name) AS employee, role.title, role.salary, employee.manager_id FROM employee INNER JOIN role ON employee.role_id = role.id ORDER BY id ASC', function (err, results) {
             console.table(results);
             questions();
           });
